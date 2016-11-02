@@ -10,5 +10,5 @@ Since this image is designed to facilitate communication between different conta
 
 Given a **quay.io/letsencrypt/letsencrypt** container that has a volume defined **-v letsencrypt:/etc/letsencrypt** and a website using **taosnet/hiawatha** with a volume defined **-v hiawatha_certs:/certs**.
 ```
-docker run --name mysite.com-ssl-broker -v letsencrypt:/etc/letsencrypt -v hiawatha_certs:/certs taosnet/certManager mysite.com letsencrypt hiawatha
+docker run --name mysite.com-ssl-broker -v letsencrypt:/etc/letsencrypt -v hiawatha_certs:/certs taosnet/cert-manager mysite.com letsencrypt hiawatha
 ```
