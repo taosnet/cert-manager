@@ -1,0 +1,39 @@
+#!/bin/sh
+
+if [ $# != 3 ]; then
+	echo Usage: $0 domain sourceType destinationType
+	exit 1
+fi
+
+domain="$1"
+sourceType="$2"
+destType="$3"
+
+case "$sourceType" in
+	"letsencrypt")
+		keyFile="/etc/letsencrypt/live/$domain/privkey.pem"
+		certFile="/etc/letsencrypt/live/$domain/cert.pem"
+		chainFile="/etc/letsencrypt/live/$domain/chain.pem"
+		;;
+	*)
+		echo Unsupported source type "$sourceType". Supported source types are "letsencrypt".
+		exit 1
+		;;
+esac
+
+case "$destType" in
+	"hiawatha")
+		if ! [ -d /certs ]; then
+			mkdir /certs
+		fi
+		cp $keyFile /certs/$domain.pem
+		echo >>/certs/$domain.pem
+		cat $certFile >>/certs/$domain.pem
+		echo >>/certs/$domain.pem
+		cat $chainFile >>/certs/$domain.pem
+		;;
+	*)
+		echo Unsupported destination type "$destType". Supported destination types are "hiawatha".
+		exit 1
+		;;
+esac
